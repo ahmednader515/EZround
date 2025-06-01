@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="title"></title>
+    <link rel="stylesheet" href="assets/css/form.css">
+    
+    
+        <!-- Additional CSS Files -->
+        <link rel="stylesheet" href="assets/css/fontawesome.css">
+        <link rel="stylesheet" href="assets/css/templatemo-lugx-gaming.css">
+        <link rel="stylesheet" href="assets/css/owl.css">
+        <link rel="stylesheet" href="assets/css/animate.css">
+        <link rel="stylesheet"href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
+</head>
+<body>
+
+      <!-- ***** Preloader Start ***** -->
+  <div id="js-preloader" class="js-preloader">
+    <div class="preloader-inner">
+      <span class="dot"></span>
+      <div class="dots">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </div>
+  <!-- ***** Preloader End ***** -->
+
+  <!-- header start -->
+
+  <section>
+    <div class="header-container">
+        <div class="logo"><img src="assets/images/logo.png" alt="logo"></div>
+        <div id="links" class="links">
+            <ul class="nav">
+                <li><a href="index.html">الصفحة الرئيسية</a></li>
+                <li><a href="index.html#steam">حسابات ستيم</a></li>
+                <!-- <li><a href="index.html#funds">شحن الألعاب</a></li> -->
+                <li><a href="index.html#marketing">الترويج</a></li>
+                <li><a class="active" href="https://wa.me/+201023005622">تواصل معنا <img style="width: 20px;" src="assets/images/whatsapp.png" alt=""></a></li>
+            </ul>
+        </div>
+
+        <div id="menu" class="menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+  </section>
+
+  <!-- header end -->
+  
+
+  <div id="loader">
+    <div class="spinner"></div>
+    </div>
+
+
+   <div id="success">
+    <h1>    تم استلام طلبك بنجاح سوف يتم الرد عليك في خلال 24 ساعة    </h1>
+    <span><i class="fa-solid fa-circle-check"></i></span>
+    <br>
+    <a class="return" href="index.html">الصفحة الرئيسية</a>
+   </div>
+
+   <div class="big-container">
+    <div id="container" class="form-container">
+        <div class="left-section">
+            <img id="card-img" src="" alt="gamepass">
+        </div>
+        <div class="right-section">
+            <h1 id="product-title"></h1>
+            <h3 id="price"></h3>
+            <form id="form" action="https://hooks.airtable.com/workflows/v1/genericWebhook/appASDi2wOOJtQD9K/wflw9XNIBfAj35CUA/wtrTOA3HAGny2eAzf" target="my_iframe" method="post">
+                <label for="name">الأسم <span style="color: red;">*</span></label>
+                <input id="name" type="text" name="Name" placeholder="محمد احمد" required>
+                <label for="email">البريد الأليكتروني <span style="color: red;">*</span></label>
+                <input id="email" type="email" name="Email" placeholder="something@gmail.com" required>
+                <input type="hidden" id="product-name" name="Product">
+                <label for="phone">رقم الهاتف <span style="color: red;">*</span></label>
+                <input id="phone" type="text" id="Phone-Number" name="Phone" placeholder="010XXXXXXXX" required>
+
+                <div class="file-input">
+                    <p>رقم تحويل فودافون كاش 01023005622 \\ انستا باي mordecai@instapay \\ ارفق صورة التحويل هنا <span style="color: red;">*</span></p>
+                    <label class="label" id="label" for="transaction"><span>أختر ملف</span> <br> <i style="display: block;" class="fa-solid fa-download"></i> <p class="file-name"></p></label>
+                    <input class="file" type="file" id="transaction" name="Transaction" required>
+                </div>
+
+                <input type="hidden" id="transaction_url" name="Transaction URL">
+                <iframe style="display: none;" name="my_iframe" src="#"></iframe>
+                <input id="submitButton" type="submit" value="ارسال">
+            </form>
+        </div>
+    </div>
+   </div>
+
+    <footer>
+        <div class="container">
+          <div class="col-lg-12">
+            <p>Copyright © EZ Round. All rights reserved &nbsp;&nbsp;</p>
+          </div>
+        </div>
+    </footer>
+
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/js/isotope.min.js"></script>
+    <script src="assets/js/owl-carousel.js"></script>
+    <script src="assets/js/counter.js"></script>
+    <script src="assets/js/app.js"></script>
+</body>
+</html>
+
+<script>
+
+    const links = document.getElementById("links");
+    const menu = document.getElementById("menu");
+
+    menu.addEventListener('click', () => {
+    if (links.style.display === "flex") {
+        links.style.display = "none";
+    } else {
+        links.style.display = "flex";
+    }
+    });
+
+    // Get product name from URL
+    const params = new URLSearchParams(window.location.search);
+    const productName = params.get('product');
+    const productImg = params.get('img');
+    const productPrice = params.get('price');
+
+    if (productName) {
+        document.getElementById('product-name').value = productName;
+        document.getElementById('title').innerText = productName;
+        document.getElementById('product-title').innerText = productName;
+        document.getElementById('card-img').src = productImg;
+        document.getElementById("price").innerText = productPrice;
+    }
+
+    const form = document.getElementById('form');
+    const url = document.getElementById('transaction_url');
+    const success = document.getElementById('success');
+    const container = document.getElementById('container');
+
+    const file = document.getElementById('transaction');
+    const label = document.getElementById('label');
+
+    file.addEventListener('change', (e) => {
+        // Get the selected file
+    const [file] = e.target.files;
+  // Get the file name and size
+  const { name: fileName, size } = file;
+  // Convert size in bytes to kilo bytes
+  const fileSize = (size / 1000).toFixed(2);
+  // Set the text content
+  const fileNameAndSize = `${fileName} - ${fileSize}KB`;
+  label.textContent = fileNameAndSize;
+  document.querySelector('.file-name').textContent = fileNameAndSize;
+});
+
+form.addEventListener('submit', async (e) => {
+    e.preventDefault(); // Stop default form submission
+
+    const file = form.elements['Transaction'].files[0];
+
+    if (!file) {
+        alert('Please select a file');
+        return;
+    }
+
+    // Show loader
+    document.getElementById('loader').style.display = 'flex';
+
+    try {
+        // 1. Upload to Cloudinary
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('upload_preset', 'transaction image');
+
+        const cloudinaryResponse = await fetch('https://api.cloudinary.com/v1_1/dc3i28haa/upload', {
+            method: 'POST',
+            body: formData
+        });
+
+        const cloudinaryData = await cloudinaryResponse.json();
+
+        if (!cloudinaryData.secure_url) {
+            alert('File upload failed');
+            document.getElementById('loader').style.display = 'none';
+            return;
+        }
+
+        // 2. Set the file URL in the hidden input
+        url.value = cloudinaryData.secure_url;
+
+        // 3. Submit the form manually AFTER file upload completes
+        form.submit();
+
+        container.style.display = "none";
+
+        // 4. Show success message after submission
+        success.style.display = "flex";
+
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Something went wrong. Please try again.');
+    } finally {
+        // Hide the loader after completion (success or fail)
+        setTimeout(() => {
+            document.getElementById('loader').style.display = 'none';
+        }, 300); // Smooth out the transition
+    }
+});
+
+
+
+</script>
